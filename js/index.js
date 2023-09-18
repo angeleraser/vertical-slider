@@ -32,6 +32,12 @@ const data = [
   },
 ];
 let index = 0;
+let timeout;
+
+function debounce(fn, delay = 300) {
+  if (timeout) clearTimeout(timeout);
+  timeout = setTimeout(fn, delay);
+}
 
 function setSliderTranslateY(pixels) {
   leftSide.style.transform = `translateY(${pixels}px)`;
@@ -49,6 +55,14 @@ slider.addEventListener("click", function ({ target }) {
 });
 
 window.addEventListener("resize", function () {
+  rightSide.style.transitionDuration = "0ms";
+  leftSide.style.transitionDuration = "0ms";
+
+  debounce(() => {
+    rightSide.style.transitionDuration = ".3s";
+    leftSide.style.transitionDuration = ".3s";
+  });
+
   setSliderTranslateY(index * slider.getBoundingClientRect().height);
 });
 
