@@ -49,7 +49,7 @@ slider.addEventListener("click", function ({ target }) {
 });
 
 window.addEventListener("resize", function () {
-  setSliderTranslateY(index * this.innerHeight);
+  setSliderTranslateY(index * slider.getBoundingClientRect().height);
 });
 
 data.forEach((element, i) => {
