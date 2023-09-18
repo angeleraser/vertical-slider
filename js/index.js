@@ -20,7 +20,7 @@ const data = [
   {
     photoUrl: "https://images.unsplash.com/photo-1486899430790-61dbf6f6d98b",
     color: "blue",
-    title: "Blue Skye",
+    title: "Blue Sky",
     subtitle: "with it's mountains",
   },
 
