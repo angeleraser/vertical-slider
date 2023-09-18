@@ -1,3 +1,5 @@
+import { debounce } from "./utils.js";
+
 const slider = document.getElementById("slider");
 const leftSide = document.querySelector(`[data-side="left"]`);
 const rightSide = document.querySelector(`[data-side="right"]`);
@@ -32,12 +34,6 @@ const data = [
   },
 ];
 let index = 0;
-let timeout;
-
-function debounce(fn, delay = 300) {
-  if (timeout) clearTimeout(timeout);
-  timeout = setTimeout(fn, delay);
-}
 
 function setSliderTranslateY(pixels) {
   leftSide.style.transform = `translateY(${pixels}px)`;
@@ -60,18 +56,18 @@ slider.addEventListener("click", function ({ target }) {
   }
 
   slider.classList.add(`bg-${data[index].color}`);
-  setSliderTranslateY(index * this.getBoundingClientRect().height);
+  setSliderTranslateY(index * slider.getBoundingClientRect().height);
 });
+
+const setSliderTransitionDuration = debounce(function () {
+  rightSide.style.transitionDuration = ".3s";
+  leftSide.style.transitionDuration = ".3s";
+}, 300);
 
 window.addEventListener("resize", function () {
   rightSide.style.transitionDuration = "0ms";
   leftSide.style.transitionDuration = "0ms";
-
-  debounce(() => {
-    rightSide.style.transitionDuration = ".3s";
-    leftSide.style.transitionDuration = ".3s";
-  });
-
+  setSliderTransitionDuration();
   setSliderTranslateY(index * slider.getBoundingClientRect().height);
 });
 
