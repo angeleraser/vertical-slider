@@ -48,8 +48,17 @@ slider.classList.add(`bg-${data[index].color}`);
 leftSide.style.top = `-${(data.length - 1) * 100}vh`;
 
 slider.addEventListener("click", function ({ target }) {
-  if (!target.dataset.btnSide) return;
-  index = index < data.length - 1 ? index + 1 : 0;
+  const side = target.dataset.btnSide;
+  if (!side) return;
+
+  if (side === "left") {
+    index = index === 0 ? data.length - 1 : index - 1;
+  }
+
+  if (side === "right") {
+    index = index === data.length - 1 ? 0 : index + 1;
+  }
+
   slider.classList.add(`bg-${data[index].color}`);
   setSliderTranslateY(index * this.getBoundingClientRect().height);
 });
